@@ -1,0 +1,315 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* LUMEN Brand Colors - Based on Brand Guidelines */
+  /* Dark Blue Primary: RGB(7, 29, 73) = #071d49 */
+  /* Gold Accent: RGB(186, 157, 25) = #A9854B */
+  /* Light Beige Background: #f5f3eb */
+  
+  --lumen-dark-blue: 7 29 73;
+  --lumen-gold: 186 157 25 ;
+  --lumen-beige: 245 243 235;
+  --lumen-gold-light: 214 191 82;
+  --lumen-gold-dark: 153 130 20;
+  --lumen-blue-light: 31 52 98;
+  --lumen-blue-lighter: 55 75 123;
+  
+  /* Brand Colors */
+  --background: rgb(var(--lumen-beige));
+  --foreground: rgb(var(--lumen-dark-blue));
+  --card: rgb(255 255 255);
+  --card-foreground: rgb(var(--lumen-dark-blue));
+  --popover: rgb(255 255 255);
+  --popover-foreground: rgb(var(--lumen-dark-blue));
+  --primary: rgb(var(--lumen-dark-blue));
+  --primary-foreground: rgb(255 255 255);
+  --secondary: rgb(var(--lumen-gold));
+  --secondary-foreground: rgb(var(--lumen-dark-blue));
+  --muted: rgb(var(--lumen-beige));
+  --muted-foreground: rgb(var(--lumen-dark-blue) / 0.7);
+  --accent: rgb(var(--lumen-gold) / 0.9);
+  --accent-foreground: rgb(var(--lumen-dark-blue));
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: rgb(255 255 255);
+  --border: rgb(var(--lumen-dark-blue) / 0.1);
+  --input: rgb(255 255 255);
+  --ring: rgb(var(--lumen-gold));
+  --chart-1: rgb(var(--lumen-gold));
+  --chart-2: rgb(var(--lumen-blue-light));
+  --chart-3: rgb(var(--lumen-gold-dark));
+  --chart-4: rgb(var(--lumen-blue-lighter));
+  --chart-5: rgb(var(--lumen-gold-light));
+  --radius: 0.5rem;
+  --sidebar: rgb(var(--lumen-dark-blue));
+  --sidebar-foreground: rgb(255 255 255);
+  --sidebar-primary: rgb(var(--lumen-gold));
+  --sidebar-primary-foreground: rgb(var(--lumen-dark-blue));
+  --sidebar-accent: rgb(var(--lumen-beige));
+  --sidebar-accent-foreground: rgb(var(--lumen-dark-blue));
+  --sidebar-border: rgb(var(--lumen-dark-blue) / 0.2);
+  --sidebar-ring: rgb(var(--lumen-gold));
+}
+
+.dark {
+  --background: oklch(0.071 0.15 240);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.1 0.1 240);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.071 0.15 240);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(0.698 0.12 50);
+  --primary-foreground: oklch(0.071 0.15 240);
+  --secondary: oklch(0.2 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.698 0.12 50);
+  --accent-foreground: oklch(0.071 0.15 240);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.2 0 0);
+  --input: oklch(0.15 0.1 240);
+  --ring: oklch(0.698 0.12 50);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.071 0.15 240);
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.698 0.12 50);
+  --sidebar-primary-foreground: oklch(0.071 0.15 240);
+  --sidebar-accent: oklch(0.2 0 0);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.2 0 0);
+  --sidebar-ring: oklch(0.698 0.12 50);
+}
+
+@theme inline {
+  --font-sans: var(--font-poppins), "Poppins", system-ui, sans-serif;
+  --font-mono: "Geist Mono", monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.5rem;
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply bg-transparent overflow-x-hidden;
+  }
+  body {
+    @apply bg-transparent text-foreground overflow-x-hidden w-full;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-sans;
+  }
+
+  h1 {
+    @apply text-5xl font-extrabold tracking-tight;
+    font-weight: 800; /* Extra Bold */
+  }
+
+  h2 {
+    @apply text-4xl font-bold tracking-tight;
+    font-weight: 600; /* Semi Bold */
+  }
+
+  h3 {
+    @apply text-2xl font-semibold tracking-tight;
+    font-weight: 600; /* Semi Bold */
+  }
+  
+  body {
+    font-weight: 400; /* Regular */
+  }
+
+  p {
+    @apply font-sans text-base leading-relaxed;
+  }
+}
+
+@layer utilities {
+  /* Primary Gradient Background - Blue focused */
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, 
+      rgb(7, 29, 73) 0%, 
+      rgb(12, 35, 85) 20%,
+      rgb(18, 42, 98) 40%,
+      rgb(12, 35, 85) 60%,
+      rgb(7, 29, 73) 80%,
+      rgb(10, 32, 78) 100%);
+  }
+
+  /* Primary Gradient with subtle gold accent */
+  .bg-primary-gradient-accent {
+    background: linear-gradient(135deg, 
+      rgb(7, 29, 73) 0%, 
+      rgb(15, 40, 90) 30%,
+      rgb(20, 45, 95) 50%,
+      rgb(15, 40, 90) 70%,
+      rgb(7, 29, 73) 100%);
+  }
+
+  /* Sidebar Gradient - Enhanced blue gradient */
+  .bg-primary-sidebar {
+    background: linear-gradient(180deg, 
+      rgb(7, 29, 73) 0%, 
+      rgb(12, 35, 85) 25%,
+      rgb(15, 40, 90) 50%,
+      rgb(12, 35, 85) 75%,
+      rgb(7, 29, 73) 100%);
+  }
+
+  /* Blue gradient for buttons */
+  .bg-primary-button-gradient {
+    background: linear-gradient(90deg, 
+      rgb(7, 29, 73) 0%, 
+      rgb(12, 35, 85) 30%,
+      rgb(15, 40, 90) 50%,
+      rgb(12, 35, 85) 70%,
+      rgb(7, 29, 73) 100%);
+  }
+
+  /* CTA Button Gradient - Monochromatic gold gradient */
+  .bg-cta-gradient {
+    background: linear-gradient(135deg, 
+      rgba(214, 191, 82, 0.9) 0%, 
+      rgba(184, 157, 24, 0.85) 30%,
+      rgba(153, 130, 20, 0.9) 70%,
+      rgba(122, 104, 16, 0.95) 100%);
+  }
+
+  .bg-cta-gradient-hover {
+    background: linear-gradient(135deg, 
+      rgba(214, 191, 82, 1) 0%, 
+      rgba(184, 157, 24, 0.95) 30%,
+      rgba(153, 130, 20, 1) 70%,
+      rgba(122, 104, 16, 1) 100%);
+  }
+}
+
+/* Infinite scroll animation for testimonials */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+/* Infinite scroll animation for client logos - right to left */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scrollLeft 20s linear infinite;
+}
+
+/* Embla Carousel smooth transitions */
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  will-change: transform;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+  min-width: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Blog content styling */
+.prose {
+  color: rgb(var(--lumen-dark-blue));
+}
+
+.prose h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: rgb(var(--lumen-dark-blue));
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: rgb(var(--lumen-dark-blue));
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  line-height: 1.8;
+}
+
+.prose ul {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.prose li {
+  margin-bottom: 0.75rem;
+  line-height: 1.8;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: rgb(var(--lumen-dark-blue));
+}
