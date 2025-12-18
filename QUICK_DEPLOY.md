@@ -80,3 +80,4 @@ After hosting Strapi, update `NEXT_PUBLIC_STRAPI_API_URL` and rebuild.
 - Verify all files from `out/` are uploaded
 - Check file paths are correct
 
+

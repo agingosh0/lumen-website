@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 
 export function AboutHeroSection() {
   return (
@@ -35,12 +36,12 @@ export function AboutHeroSection() {
 
           {/* Buttons */}
           <div className="flex flex-row items-center gap-4">
-            <button className="px-6 py-3 md:px-8 md:py-4 bg-accent text-primary font-semibold hover:bg-accent/90 transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl">
+            <Link href="/contact" className="px-6 py-3 md:px-8 md:py-4 bg-accent text-primary font-semibold hover:bg-accent/90 transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl">
               Free Consultation
-            </button>
-            <button className="px-6 py-3 md:px-8 md:py-4 border-2 border-white text-white font-semibold hover:bg-white/10 transition-all duration-300 rounded-lg">
+            </Link>
+            <Link href="/services" className="px-6 py-3 md:px-8 md:py-4 border-2 border-white text-white font-semibold hover:bg-white/10 transition-all duration-300 rounded-lg">
               Our Services
-            </button>
+            </Link>
           </div>
         </div>
       </div>

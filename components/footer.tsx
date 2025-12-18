@@ -92,14 +92,6 @@ export function Footer() {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between text-sm text-white/70">
           <p>&copy; {currentYear} LUMEN Audit & Advisory. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-accent transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-accent transition-colors">
-              Terms & Conditions
-            </a>
-          </div>
         </div>
       </div>
 
