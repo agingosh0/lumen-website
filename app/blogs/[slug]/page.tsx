@@ -1,21 +1,19 @@
+// 🔥 Force dynamic server on Vercel – no static build calls
+export const dynamic = "force-dynamic";
+
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { BlogDetailSection } from "@/components/blog-detail-section"
 import { getBlogBySlug, getAllBlogs } from "@/lib/blogs-data"
 import { notFound } from "next/navigation"
 
-export async function generateStaticParams() {
-  const blogs = await getAllBlogs()
-  return blogs.map((blog) => ({
-    slug: blog.slug,
-  }))
-}
+// ❌ REMOVE generateStaticParams – static build causes Strapi fail
+// export async function generateStaticParams() {}
 
-// Generate metadata for SEO
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+
   const blog = await getBlogBySlug(params.slug)
-  
+
   if (!blog) {
     return {
       title: "Blog Not Found",
@@ -28,30 +26,26 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   }
 }
 
-export default async function BlogDetailPage(props: { 
-  params: Promise<{ slug: string }> 
-}) {
-  const params = await props.params
-  
-  const [blog, allBlogs] = await Promise.all([
-    getBlogBySlug(params.slug),
-    getAllBlogs()
-  ])
+export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
+
+  // fetch current blog
+  const blog = await getBlogBySlug(params.slug)
 
   if (!blog) {
     notFound()
   }
 
-  // Filter out the current blog and get 3 "You may also like" posts
+  // fetch related blogs
+  const allBlogs = await getAllBlogs()
+
+  // Filter out current blog
   const relatedBlogs = allBlogs
     .filter(b => b.slug !== blog.slug)
     .slice(0, 3)
 
   return (
     <main className="min-h-screen bg-transparent">
-      <div className="relative">
-        <Navbar />
-      </div>
+      <Navbar />
       <BlogDetailSection blog={blog} relatedBlogs={relatedBlogs} />
       <Footer />
     </main>

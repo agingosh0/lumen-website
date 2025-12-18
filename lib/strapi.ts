@@ -1,7 +1,10 @@
 export function getStrapiURL(path = "") {
-  return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
-  }${path}`
+  if (!process.env.NEXT_PUBLIC_STRAPI_API_URL) {
+    console.error("❌ Strapi URL missing in env")
+    return ""
+  }
+
+  return `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${path}`
 }
 
 export async function fetchAPI(
@@ -9,60 +12,57 @@ export async function fetchAPI(
   urlParamsObject: any = {},
   options: RequestInit = {}
 ) {
+
+  // Build query string for populate + filters
+  const params = new URLSearchParams()
+
+  if (urlParamsObject.populate) {
+    params.append("populate", urlParamsObject.populate)
+  }
+
+  if (urlParamsObject.filters) {
+    Object.keys(urlParamsObject.filters).forEach(key => {
+      params.append(`filters[${key}][$eq]`, urlParamsObject.filters[key])
+    })
+  }
+
+  const queryString = params.toString()
+
+  // Build request URL
+  const requestUrl = getStrapiURL(
+    `/api${path}${queryString ? `?${queryString}` : ""}`
+  )
+
   try {
-    const mergedOptions = {
+
+    const res = await fetch(requestUrl, {
+      ...options,
       headers: {
         "Content-Type": "application/json",
+        ...(options.headers ?? {})
       },
-      ...options,
+
+      // 🔥 Prevent static build attempt caching
+      next: { revalidate: 60 },
+    })
+
+    // 🔥 DO NOT THROW ERROR — causes Vercel build fail
+    if (!res.ok) {
+      console.error("Strapi Response Error:", res.status, res.statusText)
+      return null
     }
 
-    // Build query string manually to avoid qs dependency
-    const params = new URLSearchParams()
-    
-    if (urlParamsObject.populate) {
-      if (typeof urlParamsObject.populate === 'object') {
-         // handle object populate if needed, for now simplistic
-         // This might fail if complex populate is passed, but we use "*"
-         // For deeper populate we might need a recursive function or just string
-      } else {
-         params.append('populate', urlParamsObject.populate)
-      }
-    }
+    return res.json()
 
-    if (urlParamsObject.filters) {
-      Object.keys(urlParamsObject.filters).forEach(key => {
-        params.append(`filters[${key}][$eq]`, urlParamsObject.filters[key])
-      })
-    }
-
-    const queryString = params.toString()
-    const requestUrl = `${getStrapiURL(
-      `/api${path}${queryString ? `?${queryString}` : ""}`
-    )}`
-
-    const response = await fetch(requestUrl, mergedOptions)
-
-    if (!response.ok) {
-      console.error(response.statusText)
-      throw new Error(`An error occurred please try again`)
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    console.error(error)
-    throw new Error(
-      `Please check if your server is running and you set all the required tokens.`
-    )
+  } catch (err) {
+    // 🔥 Never throw error → Vercel build dies
+    console.error("Strapi fetch failed:", err)
+    return null
   }
 }
 
 export function getStrapiMedia(url: string | null) {
-  if (url == null) {
-    return null
-  }
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url
-  }
+  if (!url) return null
+  if (url.startsWith("http") || url.startsWith("//")) return url
   return `${getStrapiURL()}${url}`
 }
