@@ -34,14 +34,22 @@ export async function fetchAPI(
   )
 
   try {
+    // Build headers with optional API token authentication
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+      ...(options.headers ?? {})
+    }
+
+    // Add Authorization header if API token is provided
+    // Use STRAPI_API_TOKEN (server-side only) or NEXT_PUBLIC_STRAPI_API_TOKEN
+    const apiToken = process.env.STRAPI_API_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN
+    if (apiToken) {
+      headers["Authorization"] = `Bearer ${apiToken}`
+    }
 
     const res = await fetch(requestUrl, {
       ...options,
-      headers: {
-        "Content-Type": "application/json",
-        ...(options.headers ?? {})
-      },
-
+      headers,
       // 🔥 Prevent static build attempt caching
       next: { revalidate: 60 },
     })
